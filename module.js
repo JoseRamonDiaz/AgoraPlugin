@@ -21,13 +21,16 @@ YUI().use("io", "json-parse", "node", 'json-stringify',
             var recursos = Y.JSON.parse(o.responseText);
 
           
-var text='<table>';
+var text='<div id="shadowing"></div><div id="box"><span id="boxtitle"></span><iframe id="gframe" width="100%" height="380" style="border: none;" scrolling="auto"></iframe><div class="buttons"><a href="#" class="negative" onclick= "closebox();" id="cancelar"><img src="iconos/cross.png" alt=""/>Cancelar' +
+    '</a><button type="submit" class="positive" name="save"><img src="iconos/apply2.png" alt=""/> Aceptar</button></div>' +
+'</div> <table>';
 			for(recurso in recursos) {
 
 				if (recursos[recurso].titulo != '') {
 					text += '<tr>';
 					text += '<td><img src="' + recursos[recurso].icono + '" title="' + recursos[recurso].extension + '" width="16" height="16" border="0" /></td>';
-					text += '<td><a href="' + recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso + '" title="' + recursos[recurso].comentario + '. ' + recursos[recurso].descripcion + '">' + recursos[recurso].titulo + '</a></td>';
+					//text += '<td><a href="' + recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso + '" title="' + recursos[recurso].comentario + '. ' + recursos[recurso].descripcion + '">' + recursos[recurso].titulo + '</a></td>';
+                                        text += '<td><a href="#" onclick="openbox(\'' + recursos[recurso].url_base + 'recurso/ver/contenido/' + recursos[recurso].id_recurso + '\', 1)' + '" title="' + recursos[recurso].comentario + '. ' + recursos[recurso].descripcion + '">' + recursos[recurso].titulo + '</a></td>';
 					text += '</tr>';
 				}
 			}

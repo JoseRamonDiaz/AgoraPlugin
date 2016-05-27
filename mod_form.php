@@ -62,7 +62,11 @@ class mod_agora_mod_form extends moodleform_mod {
 	 
 	
 	 $js = '<script type="text/javascript" src="'.$CFG->wwwroot.'/mod/agora/module.js"></script>';
+         $lightBoxJs = '<script type="text/javascript" src="../mod/agora//lightbox/lightbox-form.js"></script>';
+         $lbcss = '<link type="text/css" rel="stylesheet" href="../mod/agora/lightbox/lightbox-form.css">';
         $mform->addElement('static', 'hotpot_mod_form_js', '', $js);
+        $mform->addElement('static', 'hotpot_mod_form_js', '', $lightBoxJs);
+         $mform->addElement('static', 'hotpot_mod_form_js', '', $lbcss);
 	$mform->addElement('static', 'resultado_busqueda', '', '<span id="resultado_busqueda"></span>');
 	
        /**$mform->addRule('busqueda', null, 'required', null, 'client');
