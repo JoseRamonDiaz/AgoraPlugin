@@ -1,0 +1,90 @@
+<?php
+
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * The main agora configuration form
+ *
+ * It uses the standard core Moodle formslib. For more info about them, please
+ * visit: http://docs.moodle.org/en/Development:lib/formslib.php
+ *
+ * @package    mod
+ * @subpackage agora
+ * @copyright  2011 Your Name
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+defined('MOODLE_INTERNAL') || die();
+
+require_once($CFG->dirroot.'/course/moodleform_mod.php');
+
+/**
+ * Module instance settings form
+ */
+class mod_agora_mod_form extends moodleform_mod {
+
+    /**
+     * Defines forms elements
+     */
+    public function definition() {
+	global $PAGE,$CFG;
+
+        $mform = $this->_form;
+
+        //-------------------------------------------------------------------------------
+        // Adding the "general" fieldset, where all the common settings are showed
+        $mform->addElement('header', 'general', get_string('general', 'form'));
+	$buttonarray=array();
+        // Adding the standard "name" field
+	
+        $buttonarray[] =& $mform->addElement('text', 'busqueda', 'busqueda agora', array('size'=>'64','id'=>'campo_busqueda'));
+        if (!empty($CFG->formatstringstriptags)) {
+            $mform->setType('name', PARAM_TEXT);
+        } else {
+            $mform->setType('name', PARAM_CLEAN);
+        }
+	 $buttonarray[] =& $mform->addElement('button', 'buscar', 'buscar',array('id'=>'boton_buscar'));
+	
+	 //$mform->addGroup($buttonarray, 'buttonar', '', array(' '), false);
+	 
+	
+	 $js = '<script type="text/javascript" src="'.$CFG->wwwroot.'/mod/agora/module.js"></script>';
+        $mform->addElement('static', 'hotpot_mod_form_js', '', $js);
+	$mform->addElement('static', 'resultado_busqueda', '', '<span id="resultado_busqueda"></span>');
+	$mform->closeHeaderBefore('resultado_busqueda');
+       /**$mform->addRule('busqueda', null, 'required', null, 'client');
+        $mform->addRule('busqueda', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
+        $mform->addHelpButton('busqueda', 'newmodulename', 'agora');**/
+	
+        // Adding the standard "intro" and "introformat" fields
+        $this->add_intro_editor();
+
+        //-------------------------------------------------------------------------------
+        // Adding the rest of agora settings, spreeading all them into this fieldset
+        // or adding more fieldsets ('header' elements) if needed for better logic
+        $mform->addElement('static', 'label1', 'newmodulesetting1', 'Your agora fields go here. Replace me!');
+
+        $mform->addElement('header', 'newmodulefieldset', get_string('newmodulefieldset', 'agora'));
+        $mform->addElement('static', 'label2', 'newmodulesetting2', 'Your agora fields go here. Replace me!');
+
+        //-------------------------------------------------------------------------------
+        // add standard elements, common to all modules
+        $this->standard_coursemodule_elements();
+        //-------------------------------------------------------------------------------
+        // add standard buttons, common to all modules
+        $this->add_action_buttons();
+    }
+}
