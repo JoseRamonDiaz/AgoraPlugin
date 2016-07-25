@@ -1,0 +1,29 @@
+{{#each recurso}} 
+		<tr>
+			<td><input type="checkbox" class="idRecurso" value="{{id_recurso}}" id="check_{{recurso.id_recurso}}"/>
+		
+		
+		</td>
+		<td>
+				<a href="{{url_base}}recurso/ver/contenido/{{id_recurso}}" id="link_{{id_recurso}}" class="preview_link">
+					<img src="{{icono}}" title="{{extension}}" width="16" height="16" border="0" />
+				</a>
+			</td>
+			<td>
+				<a href="{{url_base}}recurso/ver/contenido/{{id_recurso}}" id="title_{{id_recurso}}" class="preview_link">
+					{{#if titulo}}
+						{{titulo}}
+					{{else}}
+						Sin t&iacute;tulo
+					{{/if}}
+					</a>
+					<br/>
+					{{#if descripcion}}
+						{{descripcion}}
+					{{else}}
+						Sin descripci&oacute;n
+					{{/if}} 
+										<br/>Extension: <span id="ext_{{id_recurso}}">{{extension}}</span>
+			</td>
+		</tr>
+{{/each}}
