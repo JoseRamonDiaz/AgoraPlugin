@@ -147,7 +147,7 @@ function openboxSWF(titulo,_url)
 	{
 	   document.getElementById('box').style.display='none';
 	   document.getElementById('shadowing').style.display='none';
-	   urlSeleccionada = false;
+	   //urlSeleccionada = false;
 	   tituloRecursoSeleccionado = false;
 	   restablecerLightBox();
 	       
@@ -333,7 +333,7 @@ function mostrarDetalleRecursoSeleccionado(_recursoSeleccionado)
                 tabla.append(filaDisciplina);
                 
                 //Agrega todas las filas la tabla	
-			
+				
 		
                 
                 
@@ -381,10 +381,10 @@ function obtenerDetalleRecuro(idRecurso)
          
       Y.log("Respuesta "+o.responseText); 
       try {
-        var recurso = Y.JSON.parse(o.responseText);
+        //var recurso = Y.JSON.parse(o.responseText);
         //Y.log(recurso);
-        esconderCamposBusqueda();
-        mostrarDetalleRecursoSeleccionado(recurso);
+        //esconderCamposBusqueda();
+        //mostrarDetalleRecursoSeleccionado(recurso);
       }
       catch (e) {
         alert('Error al obtener los datos del recurso 1'); 
@@ -456,9 +456,10 @@ function establecerEscuchadores(idRecurso){
 function abrirVistaPreviaArchivo(element){
 
 	element.preventDefault();
-	//console.log(element);
+	console.log('Element: ' + element);
 	var direccionRecurso = element.target.get('href');
-	console.log(direccionRecurso);
+	urlSeleccionada = direccionRecurso;
+	console.log('DireccionRecurso:' + direccionRecurso);
 
 	var n = direccionRecurso.lastIndexOf('/');
 
@@ -607,7 +608,7 @@ var handleSuccess = function(id, o, a)
 
             //We use JSON.parse to sanitize the JSON (as opposed to simply performing an
             //JavaScript eval of the data):
-	
+			console.log('Recursos: ' + o.responseText);
             var recursos = Y.JSON.parse(o.responseText);
 
             mostrarResultadoT_Busqueda(recursos);
@@ -747,7 +748,7 @@ function aceptarRecurso(o)
         
             //Estableciendo la extension del recurso
             var extension = Y.one('#extensionRecurso');
-            extension.set('value',extensionSeleccionada);
+            extension.set('value',extension);
                 
              
             obtenerDetalleRecuro(_idRecurso);
