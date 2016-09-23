@@ -41,8 +41,8 @@
  * The variable name for the capability definitions array is $capabilities
  *
  * @package    mod
- * @subpackage newmodule
- * @copyright  2011 Your Name
+ * @subpackage agora
+ * @copyright  2011 Josue Eduardo Pech Ucan
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -50,8 +50,19 @@ defined('MOODLE_INTERNAL') || die();
 
 $capabilities = array(
 
-/***************************** remove these comment marks and modify the code as needed
-    'mod/newmodule:view' => array(
+
+	'mod/agora:addinstance' => array(
+        'riskbitmask' => RISK_XSS,
+
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_COURSE,
+        'archetypes' => array(
+            'editingteacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW
+        ),
+),
+
+    'mod/agora:view' => array(
         'captype' => 'read',
         'contextlevel' => CONTEXT_MODULE,
         'legacy' => array(
@@ -71,6 +82,6 @@ $capabilities = array(
             'student' => CAP_ALLOW
         )
     ),
-******************************/
+
 );
 

@@ -41,48 +41,89 @@ class mod_agora_mod_form extends moodleform_mod {
      */
     public function definition() {
 	global $PAGE,$CFG;
+	$PAGE->requires->js('/mod/agora/swfobject/swfobject.js');
+        
+	$jsmodule = array(
+	    'name'     => 'mod_agora',
+	    'fullpath' => '/mod/agora/prueba.js',
+	    'requires' => array('base','gallery-checkboxgroups','io', 'json-parse', 'attribute','node' ,'json-stringify','stylesheet','handlebars-base', 'get'),
+  
+	);
 
-        $mform = $this->_form;
-
+	$PAGE->requires->js_init_call('M.mod_agora.init', array(), false, $jsmodule);
+        
+	$mform = $this->_form;
+	$agorasettings = get_config('agora');
+	
         //-------------------------------------------------------------------------------
         // Adding the "general" fieldset, where all the common settings are showed
         $mform->addElement('header', 'general', get_string('general', 'form'));
 	$buttonarray=array();
         // Adding the standard "name" field
 	
-        $buttonarray[] =& $mform->addElement('text', 'busqueda', 'busqueda agora', array('size'=>'64','id'=>'campo_busqueda'));
+        $buttonarray[] =& $mform->addElement('text', 'busqueda', 'Búsqueda agora', array('size'=>'64','id'=>'campo_busqueda'));
         if (!empty($CFG->formatstringstriptags)) {
             $mform->setType('name', PARAM_TEXT);
         } else {
             $mform->setType('name', PARAM_CLEAN);
         }
+	
+	$lightbox = '<div id="shadowing"></div>
+<div id="box">
+  <div id="boxtitle"></div>
+	
+
+	<div id="preview"><iframe id="gframe"></iframe></div>
+		<div class="buttons">
+    <a id="descarga" target="_blank">Descargar documento</a>
+    <a href="#" class="negative"  id="cancelar">
+        <img src="'.$CFG->wwwroot.'/mod/agora/iconos/cross.png" alt=""/>
+        Cancelar
+    </a>
+	<a  href= "#" class="positive"  name="save" id ="aceptarRecurso">
+        <img src="'.$CFG->wwwroot.'/mod/agora/iconos/apply.png" alt=""/> 
+        Aceptar
+    </a>
+</div>
+
+	
+</div>';
 	 $buttonarray[] =& $mform->addElement('button', 'buscar', 'buscar',array('id'=>'boton_buscar'));
 	
 	 //$mform->addGroup($buttonarray, 'buttonar', '', array(' '), false);
 	 
-	
+	 $mform->addElement('text', 'url_recurso', '',array('readonly'=>'readonly','class'=>'camposEscondios','id'=>'urlRecurso'));
+	 $mform->addElement('text', 'name', '',array('readonly'=>'readonly','class'=>'camposEscondios','id'=>'tituloRecurso'));	
+	 $mform->addElement('text', 'extension', '',array('readonly'=>'readonly','class'=>'camposEscondios','id'=>'extensionRecurso'));	 	
+	$swf = 	'<script type="text/javascript" src="'.$CFG->wwwroot.'/mod/agora/swfobject/swfobject.js"></script>';
+	 $mform->addElement('static', 'swf', '', $swf);
+
 	 $js = '<script type="text/javascript" src="'.$CFG->wwwroot.'/mod/agora/module.js"></script>';
-         $lightBoxJs = '<script type="text/javascript" src="../mod/agora//lightbox/lightbox-form.js"></script>';
-         $lbcss = '<link type="text/css" rel="stylesheet" href="../mod/agora/lightbox/lightbox-form.css">';
-        $mform->addElement('static', 'hotpot_mod_form_js', '', $js);
-        $mform->addElement('static', 'hotpot_mod_form_js', '', $lightBoxJs);
-         $mform->addElement('static', 'hotpot_mod_form_js', '', $lbcss);
-	$mform->addElement('static', 'resultado_busqueda', '', '<span id="resultado_busqueda"></span>');
+	
+        //$mform->addElement('static', 'hotpot_mod_form_js', '', $js);
+	$mform->addElement('static', 'resultado_busqueda', '', '<span id="div_agora"><div id="resultado_busqueda" style="display:none;"><table id="t_resultadoBusqueda" ></table></div><span id="aceptarRecursoSelect"></span></span>');
+	$mform->addElement('static', 'detalle_recurso', '', '<div id="detalleRecurso" ></div>');
+	$mform->addElement('static', 'lightbox', '', $lightbox);
 	
        /**$mform->addRule('busqueda', null, 'required', null, 'client');
         $mform->addRule('busqueda', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
         $mform->addHelpButton('busqueda', 'newmodulename', 'agora');**/
-	
+	//URl del servidor de agora
+	$mform->addElement('text', 'agora_url', 'Direccion agora', 
+			array('size'=>'64','id'=>'urlServidor'));
+	$mform->setType('agora_url', PARAM_TEXT);
+	 $mform->setDefault('agora_url', $CFG->urlServidor);	
         // Adding the standard "intro" and "introformat" fields
+	
         $this->add_intro_editor();
 
         //-------------------------------------------------------------------------------
         // Adding the rest of agora settings, spreeading all them into this fieldset
         // or adding more fieldsets ('header' elements) if needed for better logic
-        $mform->addElement('static', 'label1', 'newmodulesetting1', 'Your agora fields go here. Replace me!');
+       
 
-        $mform->addElement('header', 'newmodulefieldset', get_string('newmodulefieldset', 'agora'));
-        $mform->addElement('static', 'label2', 'newmodulesetting2', 'Your agora fields go here. Replace me!');
+      //  $mform->addElement('header', 'newmodulefieldset', get_string('newmodulefieldset', 'agora'));
+       // $mform->addElement('static', 'label2', 'newmodulesetting2', 'Your agora fields go here. Replace me!');
 
         //-------------------------------------------------------------------------------
         // add standard elements, common to all modules

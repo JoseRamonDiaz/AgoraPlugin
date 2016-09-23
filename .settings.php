@@ -15,27 +15,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
 /**
- * English strings for agora
- *
- * You can have a rather longer description of the file as well,
- * if you like, and it can span multiple lines.
+ * Url module admin settings and defaults
  *
  * @package    mod
- * @subpackage agora
- * @copyright  2011 Your Name
+ * @subpackage url
+ * @copyright  2009 Petr Skoda  {@link http://skodak.org}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+defined('MOODLE_INTERNAL') || die;
 
-$string['modulename'] = 'Agora';
-$string['modulenameplural'] = 'recursos_agora';
-$string['modulename_help'] = 'Modulo para buscar e insertar objetos de aprendizaje de la plataforma agora';
-$string['newmodulefieldset'] = 'Custom example fieldset';
-$string['newmodulename'] = 'agora name';
-$string['newmodulename_help'] = 'This is the content of the help tooltip associated with the newmodulename field. Markdown syntax is supported.';
-$string['agora'] = 'Agora';
-$string['pluginadministration'] = 'agora administration';
-$string['pluginname'] = 'Agora';
+if( $ADMIN->fulltree ) {
+}
