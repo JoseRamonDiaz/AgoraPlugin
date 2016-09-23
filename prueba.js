@@ -828,7 +828,7 @@ M.mod_agora.init = function (Y) {
     function cargaHashMap(){
         oResponse = JSON.parse(sResponse);
         for (var i = 0; i < oResponse.length; i++){
-            hmObjApren[oResponse[i].id_recurso] = oResponse[i].titulo;
+            hmObjApren[oResponse[i].id_recurso] = (oResponse[i].titulo === null ? 'Sin título' : oResponse[i].titulo);
         }
         console.log(hmObjApren);
     }
